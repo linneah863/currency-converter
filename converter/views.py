@@ -11,7 +11,7 @@ def convert(request):
     if request.method == "POST":
         form = BalanceForm(request.POST)
         if form.is_valid():
-            rate = ExchangeRate.objects.filter(form.cleaned_data['o_currency']).filter(form.cleaned_data['t_currency'])
+            rate = ExchangeRate.objects.filter(form.cleaned_data.get('o_currency')).filter(form.cleaned_data.get('t_currency'))
         balanse = form.balance
         result = float(balanse)*float(rate)
         return HttpResponseRedirect('')
