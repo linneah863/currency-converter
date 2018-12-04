@@ -3,13 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style type="text/css">
+        .our-form{
+            width: 500px;
+            height: 100px;
+            margin: 100px auto;
+            padding: 20px;
+            overflow: hidden;
+            background: #E0FFFF;
+        }
+        .inline-div{
+            float: left;
+            margin-left: 10px;
+            text-align: top;
+        }
+        .form-span{
+            width: 40px;
+            display: inline-block;
+        }
+        .curr-type{
+            width: 80px;
+            height: 33px;
+            border-radius: 5px;
+        }
+        .balance{
+            width: 150px;
+            height: 30px;
+            border-radius: 3px;
+        }
+        .btn{
+            width: 70px;
+            height: 35px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        .btn:hover{
+            background: darkgrey;
+            transition: .2s;
+        }
+    </style>
 </head>
 <body>
-<form action="" method="POST">
+{% for c in currency %}
+{{c}}
+{% endfor %}
+<form action="" method="POST" class="our-form">
     {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Post">
-<input type="text" size="40">
+    <div class="inline-div">
+        <span>Balance &nbsp</span>
+        <input type="text" class="balance" name="balance">
+    </div>
+    <div class="inline-div">
+        <div>
+            <span class="form-span">from</span>
+            <select class="curr-type">
+                {% for c in currency %}
+                    <option>{{c}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <span class="form-span">to</span>
+            <select class="curr-type">
+                {% for c in currency %}
+                    <option>{{c}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="inline-div">
+        <input type="submit" class="btn" value="Post">
+    </div>
+
+
 </form>
+<div>
+    {% if result %}
+        {{ result}}
+    {% endif %}
+</div>
 </body>
 </html>
