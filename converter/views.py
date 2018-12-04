@@ -12,16 +12,16 @@ def convert(request):
         form = BalanceForm(request.POST)
         if form.is_valid():
             rate = ExchangeRate.objects.get(o_currency=form.cleaned_data['o_currency'], t_currency=form.cleaned_data['t_currency']).rate
-            form.clean()
-        balance = form.cleaned_data['balance']
-        result = float(balance)/float(rate)
-        result = round(result, 2)
+            balance = form.cleaned_data['balance']
+            result = float(balance) / float(rate)
+            result = round(result, 2)
         currency = Currency.objects.all()
         return render(request, 'base.html', {'currency': currency, 'result': result})
     else:
+        form = BalanceForm()
         currency = Currency.objects.all()
         result = None
-        return render(request, 'base.html', {'currency': currency, 'result': result})
+        return render(request, 'base.html', {'currency': currency, 'result': result, 'form': form})
 
 
 
