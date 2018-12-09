@@ -45,29 +45,30 @@
     </style>
 </head>
 <body>
-{% for c in currency %}
-{{c}}
-{% endfor %}
+
 <form action="" method="POST" class="our-form">
     {% csrf_token %}
+    {{ form.non_field_errors }}
     <div class="inline-div">
-        <span>Balance &nbsp</span>
+        {{ form.balance.errors }}
+        <label for="{{ form.balance.id_for_label }}">Balance: </label>
         <input type="text" class="balance" name="balance">
     </div>
     <div class="inline-div">
+        {{ form.o_currency.errors }}
         <div>
             <span class="form-span">from</span>
-            <select class="curr-type">
+            <select class="curr-type" name="o_currency">
                 {% for c in currency %}
-                    <option>{{c}}</option>
+                    <option value="{{ c.id }}">{{c}}</option>
                 {% endfor %}
             </select>
         </div>
         <div>
             <span class="form-span">to</span>
-            <select class="curr-type">
+            <select class="curr-type" name="t_currency">
                 {% for c in currency %}
-                    <option>{{c}}</option>
+                    <option value="{{ c.id }}">{{c}}</option>
                 {% endfor %}
             </select>
         </div>
