@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Конвертёр валют онлайн</title>
     <style type="text/css">
         .our-form{
             width: 500px;
             height: 100px;
             margin: 100px auto;
             padding: 20px;
-            overflow: hidden;
+            position: relative;
             background: #E0FFFF;
+        }
+        .computing{
+            overflow: hidden;
         }
         .inline-div{
             float: left;
@@ -42,47 +45,72 @@
             background: darkgrey;
             transition: .2s;
         }
+        .result{
+            position: absolute;
+            bottom: 45px;
+            left: 20px;
+        }
+        .result span{
+            padding-left: 10px;
+        }
+        .result-number{
+            display: inline-block;
+            background: white;
+            font-size: 22px;
+            width: 140px;
+            padding: 3px 5px;
+            border-radius: 3px;
+            box-shadow: -2px -2px 2px rgba(0,0,0,0.5);
+            margin-left: 15px;
+        }
+        .customer-title{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+<h1 class="customer-title">Конвертёр валют онлайн</h1>
 
 <form action="" method="POST" class="our-form">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    <div class="inline-div">
-        {{ form.balance.errors }}
-        <label for="{{ form.balance.id_for_label }}">Balance: </label>
-        <input type="text" class="balance" name="balance">
-    </div>
-    <div class="inline-div">
-        {{ form.o_currency.errors }}
-        <div>
-            <span class="form-span">from</span>
-            <select class="curr-type" name="o_currency">
-                {% for c in currency %}
-                    <option value="{{ c.id }}">{{c}}</option>
-                {% endfor %}
-            </select>
+    <div class="computing">
+        <div class="inline-div">
+            {{ form.balance.errors }}
+            <label for="{{ form.balance.id_for_label }}">Balance: </label>
+            <input type="text" class="balance" name="balance" {% if form.balance.value %} value="{{form.balance.value}}" {% endif %}>
         </div>
-        <div>
-            <span class="form-span">to</span>
-            <select class="curr-type" name="t_currency">
-                {% for c in currency %}
-                    <option value="{{ c.id }}">{{c}}</option>
-                {% endfor %}
-            </select>
+        <div class="inline-div">
+            {{ form.o_currency.errors }}
+            <div>
+                <span class="form-span">from</span>
+                <select class="curr-type" name="o_currency">
+                    {% for c in currency %}
+                        <option value="{{ c.id }}" {% if form.o_currency.id == c.id %} selected="True" {% endif %}>{{c}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <span class="form-span">to</span>
+                <select class="curr-type" name="t_currency">
+                    {% for c in currency %}
+                        <option value="{{ c.id }}" {% if form.t_currency.id == c.id %} selected="True" {% endif %}>{{c}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="inline-div">
+            <input type="submit" class="btn" value="Post">
         </div>
     </div>
-    <div class="inline-div">
-        <input type="submit" class="btn" value="Post">
-    </div>
-
-
-</form>
-<div>
+    <div class="result">
     {% if result %}
-        {{ result}}
+        <span>Result: </span>
+        <div class="result-number">
+            {{ result}}
+        </div>
     {% endif %}
-</div>
+    </div>
+</form>
 </body>
 </html>

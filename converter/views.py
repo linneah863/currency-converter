@@ -16,7 +16,7 @@ def convert(request):
             result = float(balance) / float(rate)
             result = round(result, 2)
         currency = Currency.objects.all()
-        return render(request, 'base.html', {'currency': currency, 'result': result})
+        return render(request, 'base.html', {'currency': currency, 'result': result, 'form': form})
     else:
         form = BalanceForm()
         currency = Currency.objects.all()
